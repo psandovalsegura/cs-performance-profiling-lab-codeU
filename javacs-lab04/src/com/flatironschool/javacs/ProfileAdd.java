@@ -13,14 +13,18 @@ public class ProfileAdd {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		profileArrayListAddEnd();
+		//profileArrayListAddEnd();
 		//profileArrayListAddBeginning();
 		//profileLinkedListAddBeginning();
-		//profileLinkedListAddEnd();
+		profileLinkedListAddEnd();
 	}
 
 	/**
 	 * Characterize the run time of adding to the end of an ArrayList
+	 *
+	 * The log-log plot demonstrates a slope of approximately 1, which means the
+	 * profileArrayListAddEnd method ran in linear time, and the ArrayList add to
+	 * the end in constant time.
 	 */
 	public static void profileArrayListAddEnd() {
 		Timeable timeable = new Timeable() {
@@ -43,23 +47,83 @@ public class ProfileAdd {
 
 	/**
 	 * Characterize the run time of adding to the beginning of an ArrayList
+	 *
+	 * The log-log plot demonstrates a slope of approximately 2, which means the
+	 * profileArrayListAddEnd method ran in quadratic time, and the ArrayList add to
+	 * the beginning ran in linear time.
 	 */
 	public static void profileArrayListAddBeginning() {
-		// Fill me in!
+		Timeable timeable = new Timeable() {
+			List<String> list;
+
+			public void setup(int n) {
+				list = new ArrayList<String>();
+			}
+
+			public void timeMe(int n) {
+				for (int i = 0; i < n; i++) {
+					list.add(0, "test prepend"); //Use the add method with a second parameter
+				}
+			}
+		};
+
+		int startN = 4000;
+		int endMillis = 3000;
+		runProfiler("ArrayList add beginning", timeable, startN, endMillis);
 	}
 
 	/**
 	 * Characterize the run time of adding to the beginning of a LinkedList
+	 *
+	 * The log-log plot demonstrates a slope of approximately 1, which means the
+	 * profileArrayListAddEnd method ran in linear time, and the LinkedList add to
+	 * the beginning ran in constant time.
 	 */
 	public static void profileLinkedListAddBeginning() {
-		// Fill me in!
+		Timeable timeable = new Timeable() {
+			List<String> list;
+
+			public void setup(int n) {
+				list = new LinkedList<String>();
+			}
+
+			public void timeMe(int n) {
+				for (int i=0; i<n; i++) {
+					list.add(0, "test prepend");
+				}
+			}
+		};
+		int startN = 4000;
+		int endMillis = 1000;
+		runProfiler("LinkedList add beginning", timeable, startN, endMillis);
 	}
 
 	/**
 	 * Characterize the run time of adding to the end of a LinkedList
+	 *
+	 * The log-log plot demonstrates a slope of approximately 1, which means the
+	 * profileArrayListAddEnd method ran in linear time, and the LinkedList add to
+	 * the end ran in constant time. This is contrary to what we expect (which we expect to
+	 * have the add method run in linear time).
 	 */
 	public static void profileLinkedListAddEnd() {
-		// Fill me in!
+		Timeable timeable = new Timeable() {
+			List<String> list;
+
+			public void setup(int n) {
+				list = new LinkedList<String>();
+			}
+
+			public void timeMe(int n) {
+				for (int i=0; i<n; i++) {
+					list.add("test");
+				}
+			}
+		};
+
+		int startN = 4000;
+		int endMillis = 10000;
+		runProfiler("LinkedList add end", timeable, startN, endMillis);
 	}
 
 	/**
